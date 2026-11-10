@@ -1,0 +1,84 @@
+name: Daily edition
+
+# Writes and emails your paper every morning. Set it up in your own private copy of this
+# repository: see "Get it every morning with GitHub Actions" in the README.
+on:
+  schedule:
+    - cron: "30 5 * * *" # 05:30 UTC every day. Change it to suit your morning.
+  workflow_dispatch:
+
+concurrency:
+  group: daily-edition
+
+jobs:
+  edition:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+      DAILYME_PROFILE: ${{ vars.DAILYME_PROFILE }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Check the setup
+        id: setup
+        run: |
+          if [ -z "$ANTHROPIC_API_KEY" ]; then
+            echo "::notice::No ANTHROPIC_API_KEY secret yet, so no edition today. See the README."
+            echo "ready=false" >> "$GITHUB_OUTPUT"
+          elif [ -z "$DAILYME_PROFILE" ] && [ ! -f profile.yaml ]; then
+            echo "::notice::No profile yet: add a DAILYME_PROFILE variable or a profile.yaml file."
+            echo "ready=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "ready=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - uses: actions/setup-python@v5
+        if: steps.setup.outputs.ready == 'true'
+        with:
+          python-version: "3.12"
+
+      - name: Install
+        if: steps.setup.outputs.ready == 'true'
+        run: pip install .
+
+      - name: Restore story history
+        if: steps.setup.outputs.ready == 'true'
+        uses: actions/cache/restore@v4
+        with:
+          path: state
+          key: dailyme-state-${{ github.run_id }}
+          restore-keys: dailyme-state-
+
+      - name: Write and send today's edition
+        if: steps.setup.outputs.ready == 'true'
+        env:
+          PUBLIC_REPO: ${{ github.event.repository.private == false }}
+          DAILYME_SMTP_HOST: ${{ secrets.DAILYME_SMTP_HOST }}
+          DAILYME_SMTP_PORT: ${{ secrets.DAILYME_SMTP_PORT }}
+          DAILYME_SMTP_USER: ${{ secrets.DAILYME_SMTP_USER }}
+          DAILYME_SMTP_PASSWORD: ${{ secrets.DAILYME_SMTP_PASSWORD }}
+          DAILYME_EMAIL_FROM: ${{ secrets.DAILYME_EMAIL_FROM }}
+          DAILYME_EMAIL_TO: ${{ secrets.DAILYME_EMAIL_TO }}
+        run: |
+          # Logs of public repositories are public, so keep them quiet there.
+          flags=""
+          if [ "$PUBLIC_REPO" = "true" ]; then flags="--quiet"; fi
+          dailyme $flags run --out editions --state state --send
+
+      - name: Save story history
+        if: steps.setup.outputs.ready == 'true'
+        uses: actions/cache/save@v4
+        with:
+          path: state
+          key: dailyme-state-${{ github.run_id }}
+
+      # Artifacts of public repositories can be downloaded by anyone, so only private
+      # repositories keep a copy of the edition.
+      - name: Keep the edition as a download
+        if: steps.setup.outputs.ready == 'true' && github.event.repository.private
+        uses: actions/upload-artifact@v4
+        with:
+          name: edition-${{ github.run_id }}
+          path: editions/
+          retention-days: 30

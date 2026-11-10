@@ -1,0 +1,253 @@
+{% macro kicker(a) %}
+<div class="kicker">{{ a.section }}{% if a.kind == 'follow_up' %} · Update{% elif a.kind != 'news' %} · {{ a.kind | replace('_', ' ') | title }}{% endif %}</div>
+{% endmacro %}
+{% macro sources(a) %}
+{% if a.sources %}
+<p class="sources">Sources: {% for s in a.sources %}<a href="{{ s.url | safe_url }}">{{ s.publisher or (s.url | domain) }}</a>{% if not loop.last %} · {% endif %}{% endfor %}{% if a.published %}<span class="date"> · {{ a.published }}</span>{% endif %}</p>
+{% endif %}
+{% endmacro %}
+{% macro teaser(a) %}
+<article class="teaser">
+{{ kicker(a) }}
+<h3><a href="#{{ a.id }}">{{ a.headline }}</a></h3>
+{% if a.dek %}
+<p class="dek">{{ a.dek }}</p>
+{% endif %}
+{% if a.body %}
+<div class="body"><p>{{ a.body[0] }}</p></div>
+{% endif %}
+<p class="jump"><a href="#{{ a.id }}">Continued in {{ a.section }} &rarr;</a></p>
+</article>
+{% endmacro %}
+{% macro story(a, heading='h3') %}
+<article id="{{ a.id }}">
+{{ kicker(a) }}
+<{{ heading }}>{{ a.headline }}</{{ heading }}>
+{% if a.dek %}
+<p class="dek">{{ a.dek }}</p>
+{% endif %}
+<div class="body">
+{% for paragraph in a.body %}
+<p>{{ paragraph }}</p>
+{% endfor %}
+</div>
+{% if a.why_it_matters %}
+<p class="why"><strong>Why it matters to you.</strong> {{ a.why_it_matters }}</p>
+{% endif %}
+{{ sources(a) }}
+</article>
+{% endmacro %}
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{{ e.paper_name }} · {{ e.date | dateline }}</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=UnifrakturMaguntia&family=Playfair+Display:ital,wght@0,700;0,900;1,400&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&display=swap">
+<style>
+  :root {
+    --paper: #f6f1e7;
+    --ink: #1b1a17;
+    --muted: #5b564d;
+    --rule: #1b1a17;
+    --hairline: #c9c1b1;
+    --accent: #8b1e1e;
+    --box: #ece4d3;
+  }
+  * { box-sizing: border-box; }
+  html { background: var(--paper); }
+  body {
+    margin: 0 auto;
+    max-width: 1180px;
+    padding: 28px 32px 48px;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: "Source Serif 4", Georgia, "Times New Roman", serif;
+    font-size: 17px;
+    line-height: 1.5;
+  }
+  a { color: inherit; }
+  p { margin: 0 0 10px; }
+  .body p { text-align: justify; hyphens: auto; }
+
+  .masthead { text-align: center; border-bottom: 3px double var(--rule); padding-bottom: 8px; }
+  .ears { display: flex; justify-content: space-between; align-items: flex-end; gap: 16px; }
+  .ear {
+    min-width: 22%;
+    max-width: 40%;
+    border: 1px solid var(--rule);
+    padding: 6px 8px;
+    font-size: 12px;
+    letter-spacing: .06em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+  .title {
+    margin: 4px 0 0;
+    font-family: "UnifrakturMaguntia", "Old English Text MT", Georgia, serif;
+    font-weight: 400;
+    font-size: clamp(46px, 8.5vw, 96px);
+    line-height: 1.05;
+  }
+  .tagline { margin-top: 2px; font-style: italic; font-size: 14px; color: var(--muted); }
+  .dateline {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+    padding: 5px 2px;
+    border-top: 1px solid var(--rule);
+    border-bottom: 1px solid var(--rule);
+    font-size: 12.5px;
+    letter-spacing: .07em;
+    text-transform: uppercase;
+  }
+
+  .greeting {
+    max-width: 820px;
+    margin: 20px auto 4px;
+    font-size: 19px;
+    font-style: italic;
+    text-align: center;
+  }
+
+  .kicker {
+    margin-bottom: 4px;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: var(--accent);
+  }
+  h2, h3 { font-family: "Playfair Display", Georgia, serif; margin: 0 0 8px; }
+  .dek { font-family: "Playfair Display", Georgia, serif; font-style: italic; font-size: 18px; color: var(--muted); }
+  .why { margin: 10px 0; padding: 4px 0 4px 10px; border-left: 3px solid var(--accent); font-size: 15px; }
+  .sources { font-size: 13px; color: var(--muted); }
+  .sources a { color: var(--muted); }
+
+  .front {
+    display: grid;
+    grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
+    gap: 0 30px;
+    padding: 18px 0 20px;
+    border-bottom: 3px double var(--rule);
+  }
+  .lead h2 { font-weight: 900; font-size: clamp(30px, 4.4vw, 52px); line-height: 1.04; }
+  .lead .dek { font-size: 21px; }
+  .lead .body { column-count: 2; column-gap: 26px; column-rule: 1px solid var(--hairline); }
+  .side { border-left: 1px solid var(--rule); padding-left: 24px; }
+  .side article { padding-bottom: 12px; margin-bottom: 12px; border-bottom: 1px solid var(--hairline); }
+  .side article:last-child { border-bottom: 0; margin-bottom: 0; }
+  .side h3 { font-size: 23px; line-height: 1.15; }
+  .side h3 a { text-decoration: none; }
+  .jump { margin: 0; font-size: 13px; font-style: italic; }
+  .jump a { color: var(--accent); text-decoration: none; }
+
+  .section { padding: 16px 0 14px; border-bottom: 1px solid var(--rule); }
+  .section > h2 {
+    margin: 0 0 14px;
+    padding: 6px 0;
+    border-top: 2px solid var(--rule);
+    border-bottom: 1px solid var(--rule);
+    font-size: 15px;
+    letter-spacing: .18em;
+    text-align: center;
+    text-transform: uppercase;
+  }
+  .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 0 30px; }
+  .grid h3 { font-size: 25px; line-height: 1.12; }
+  .grid article:only-child .body { column-count: 2; column-gap: 26px; column-rule: 1px solid var(--hairline); }
+  article { break-inside: avoid; }
+  .note { font-style: italic; color: var(--muted); text-align: center; }
+  .briefs { list-style: none; margin: 8px 0 0; padding: 0; columns: 2 320px; column-gap: 30px; }
+  .briefs li { break-inside: avoid; padding: 6px 0; border-top: 1px dotted var(--hairline); font-size: 15px; }
+  .briefs a { color: var(--muted); font-size: 13px; }
+  .bubble { margin-top: 18px; padding: 14px 20px; background: var(--box); border: 1px solid var(--rule); }
+  .bubble > h2 { border-top: 0; }
+
+  footer { margin-top: 22px; font-size: 12.5px; color: var(--muted); text-align: center; }
+
+  @media (max-width: 760px) {
+    body { padding: 16px; font-size: 16px; }
+    .ear { display: none; }
+    .dateline { flex-direction: column; gap: 2px; text-align: center; }
+    .front { grid-template-columns: 1fr; }
+    .lead .body, .grid article:only-child .body { column-count: 1; }
+    .side { border-left: 0; padding-left: 0; border-top: 1px solid var(--rule); padding-top: 14px; }
+  }
+  @media print {
+    @page { size: A4; margin: 12mm; }
+    html, body { background: #fff; }
+    body { max-width: none; padding: 0; font-size: 10.5pt; }
+    a { text-decoration: none; }
+    .bubble { background: #f3f0ea; }
+  }
+</style>
+</head>
+<body>
+<header class="masthead">
+  <div class="ears">
+    <div class="ear">No. {{ e.number }}</div>
+    <div class="ear">{{ weather or "Your edition" }}</div>
+  </div>
+  <h1 class="title">{{ e.paper_name }}</h1>
+  {% if e.tagline %}
+  <div class="tagline">“{{ e.tagline }}”</div>
+  {% endif %}
+  <div class="dateline">
+    <span>{{ e.date | dateline }}</span>
+    <span>Edition for {{ e.reader or "you" }}</span>
+    <span>{{ e.articles() | length }} stories</span>
+  </div>
+</header>
+
+{% if e.front.greeting %}
+<p class="greeting">{{ e.front.greeting }}</p>
+{% endif %}
+
+{% if lead %}
+<section class="front">
+  <div class="lead">
+{{ story(lead, 'h2') }}
+  </div>
+  {% if top %}
+  <aside class="side">
+    {% for a in top %}
+{{ teaser(a) }}
+    {% endfor %}
+  </aside>
+  {% endif %}
+</section>
+{% endif %}
+
+{% for item in sections %}
+{% if item.articles or item.section.briefs or item.section.note %}
+<section class="section{% if item.bubble %} bubble{% endif %}">
+  <h2>{{ item.section.name }}</h2>
+  {% if item.articles %}
+  <div class="grid">
+    {% for a in item.articles %}
+{{ story(a) }}
+    {% endfor %}
+  </div>
+  {% elif item.section.note %}
+  <p class="note">{{ item.section.note }}</p>
+  {% endif %}
+  {% if item.section.briefs %}
+  <ul class="briefs">
+    {% for b in item.section.briefs %}
+    <li>{{ b.text }} <a href="{{ b.url | safe_url }}">{{ b.publisher or (b.url | domain) }}</a></li>
+    {% endfor %}
+  </ul>
+  {% endif %}
+</section>
+{% endif %}
+{% endfor %}
+
+<footer>
+  <p>{{ e.paper_name }} No. {{ e.number }}, written for {{ e.reader or "you" }}{% if e.generated_by %} by {{ e.generated_by }}{% endif %} from {{ source_count }} sources. Every story links to its sources: check them before you rely on a detail.{% if e.cost_usd is not none %} This edition cost about ${{ '%.2f' | format(e.cost_usd) }} to make.{% endif %}</p>
+  <p>Made with <a href="{{ repo_url }}">The Daily Me</a>, an open-source personal newspaper.</p>
+</footer>
+</body>
+</html>

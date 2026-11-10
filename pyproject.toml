@@ -1,0 +1,53 @@
+[build-system]
+requires = ["hatchling>=1.24"]
+build-backend = "hatchling.build"
+
+[project]
+name = "dailyme"
+version = "0.1.0"
+description = "Your own AI-written newspaper, every morning: Claude reads the web for your interests and lays out a front page."
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "MIT" }
+authors = [{ name = "Joshua C. Udotai" }]
+keywords = ["newspaper", "news", "ai", "claude", "anthropic", "personalization", "rss", "digest", "llm"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Environment :: Console",
+    "Intended Audience :: End Users/Desktop",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Topic :: Internet :: WWW/HTTP :: Dynamic Content :: News/Diary",
+]
+dependencies = [
+    "anthropic>=2.0",
+    "pydantic>=2.6",
+    "pyyaml>=6.0",
+    "jinja2>=3.1",
+    "feedparser>=6.0",
+    "tzdata; sys_platform == 'win32'",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=8", "ruff>=0.6"]
+
+[project.scripts]
+dailyme = "dailyme.cli:main"
+
+[project.urls]
+Homepage = "https://github.com/romanthegentle/daily-me"
+Issues = "https://github.com/romanthegentle/daily-me/issues"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/dailyme"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py310"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B", "BLE"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

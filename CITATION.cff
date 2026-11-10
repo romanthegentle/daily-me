@@ -1,0 +1,23 @@
+cff-version: 1.2.0
+message: "If you use The Daily Me in your work, please cite it as below."
+title: "The Daily Me: an open-source personal newspaper written by AI"
+type: software
+authors:
+  - family-names: Udotai
+    given-names: Joshua C.
+version: 0.1.0
+date-released: "2026-11-10"
+license: MIT
+repository-code: "https://github.com/romanthegentle/daily-me"
+keywords:
+  - personalized news
+  - news recommendation
+  - large language models
+  - AI agents
+  - filter bubble
+abstract: >-
+  The Daily Me builds a personal newspaper every morning. A reader profile says who the
+  reader is and what they follow. For each section, a Claude reporter searches and reads
+  the web, then files sourced articles in its own words; an editor composes the front page.
+  Editions skip stories the reader has already seen, and each one carries a story from
+  outside the reader's interests to work against the filter bubble.

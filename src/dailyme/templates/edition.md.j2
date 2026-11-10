@@ -1,0 +1,59 @@
+{% macro story(a) %}
+### {{ a.headline }}
+
+{% if a.dek %}
+*{{ a.dek }}*
+
+{% endif %}
+{% for paragraph in a.body %}
+{{ paragraph }}
+
+{% endfor %}
+{% if a.why_it_matters %}
+**Why it matters to you:** {{ a.why_it_matters }}
+
+{% endif %}
+{% if a.sources %}
+Sources: {% for s in a.sources %}[{{ s.publisher or (s.url | domain) }}]({{ s.url | safe_url }}){% if not loop.last %} · {% endif %}{% endfor %}
+
+{% endif %}
+{% endmacro %}
+# {{ e.paper_name }}
+
+No. {{ e.number }} · {{ e.date | dateline }}{% if weather %} · {{ weather }}{% endif %}
+
+
+{% if e.front.greeting %}
+> {{ e.front.greeting }}
+
+{% endif %}
+{% if lead %}
+## Front page
+
+{{ story(lead) }}
+{% for a in top %}
+{{ story(a) }}
+{% endfor %}
+{% endif %}
+{% for item in sections %}
+{% if item.articles or item.section.briefs or item.section.note %}
+## {{ item.section.name }}
+
+{% for a in item.articles %}
+{{ story(a) }}
+{% endfor %}
+{% if not item.articles and item.section.note %}
+*{{ item.section.note }}*
+
+{% endif %}
+{% for b in item.section.briefs %}
+- {{ b.text }} ([{{ b.publisher or (b.url | domain) }}]({{ b.url | safe_url }}))
+{% endfor %}
+{% if item.section.briefs %}
+
+{% endif %}
+{% endif %}
+{% endfor %}
+---
+
+{{ e.paper_name }} No. {{ e.number }}, written for {{ e.reader or "you" }}{% if e.generated_by %} by {{ e.generated_by }}{% endif %} from {{ source_count }} sources. Made with The Daily Me: {{ repo_url }}

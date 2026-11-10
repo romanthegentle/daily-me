@@ -1,0 +1,78 @@
+# The Daily Me: your reader profile.
+#
+# Copy this file to profile.yaml (or run `dailyme init`) and make it yours.
+# It stays on your machine, or in your own repository settings if you use
+# GitHub Actions. Nothing here is shared with anyone except the Claude API.
+
+paper:
+  name: The Daily Me
+  tagline: All the news that fits me
+
+reader:
+  name: Ada
+  # The more the paper knows about you, the better it can say why a story matters to you.
+  # Tip: ask your AI assistant "Describe my work, my interests and the topics I follow,
+  # in detail", save the answer as about-me.txt, and run
+  #   dailyme init --from-text about-me.txt
+  # to turn it into a profile like this one.
+  about: >
+    Data scientist in Lagos building a fintech startup. Reads about AI research and
+    new models, African tech and venture funding, payments, and space science.
+    Prefers depth over hot takes.
+  location:
+    name: Lagos
+    country: NG               # two-letter country code, used to localise searches
+    timezone: Africa/Lagos
+    latitude: 6.5244          # optional: turns on the weather box
+    longitude: 3.3792
+
+sections:
+  - name: AI & Machine Learning
+    interests:
+      - new model releases and benchmarks
+      - AI agents and developer tools
+      - recommender systems research
+    max_articles: 3
+    max_briefs: 3
+
+  - name: African Tech
+    interests:
+      - startup funding rounds in Africa
+      - fintech and payments regulation in Nigeria, Kenya and South Africa
+    feeds:                    # optional RSS or Atom feeds, used as extra leads
+      - https://techcabal.com/feed/
+    max_articles: 3
+    max_briefs: 3
+
+  - name: Science & Space
+    interests:
+      - space missions and astronomy
+      - climate science
+    max_articles: 2
+    max_briefs: 2
+
+# One story from outside your usual interests, so the paper never becomes an echo chamber.
+serendipity: true
+
+# Topics the paper should leave out.
+avoid:
+  - celebrity gossip
+  - cryptocurrency price speculation
+
+sources:
+  prefer: [reuters.com, apnews.com, bbc.com, techcabal.com, arxiv.org, nature.com]
+  block: []
+
+settings:
+  model: claude-opus-5-5      # any current Claude model
+  effort: medium              # low | medium | high | xhigh | max
+  window_hours: 36            # how far back each edition looks
+  searches_per_section: 5
+  fetches_per_section: 4
+  parallel_sections: 4
+  fallbacks: true             # if a request is declined, let the API retry it on another model
+
+delivery:
+  subject: "{paper} · {weekday} {day} {month}"
+  pdf: false                  # also print a PDF (needs Chrome or Edge installed)
+  attach_pdf: false           # attach that PDF to the email, handy for Kindle or reMarkable

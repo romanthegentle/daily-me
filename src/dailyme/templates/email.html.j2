@@ -1,0 +1,78 @@
+{% set serif = "Georgia, 'Times New Roman', serif" %}
+{% macro story(a, size=22) %}
+<tr><td style="padding:16px 28px 4px;font-family:{{ serif }};color:#1b1a17;">
+  <div style="font-size:11px;font-weight:bold;letter-spacing:1.5px;text-transform:uppercase;color:#8b1e1e;">{{ a.section }}{% if a.kind == 'follow_up' %} · Update{% endif %}</div>
+  <div style="font-size:{{ size }}px;line-height:1.2;font-weight:bold;margin:4px 0 6px;">{{ a.headline }}</div>
+  {% if a.dek %}
+  <div style="font-size:16px;font-style:italic;color:#5b564d;margin-bottom:8px;">{{ a.dek }}</div>
+  {% endif %}
+  {% for paragraph in a.body %}
+  <p style="font-size:16px;line-height:1.55;margin:0 0 10px;">{{ paragraph }}</p>
+  {% endfor %}
+  {% if a.why_it_matters %}
+  <p style="font-size:14px;line-height:1.5;margin:0 0 10px;padding-left:10px;border-left:3px solid #8b1e1e;"><strong>Why it matters to you.</strong> {{ a.why_it_matters }}</p>
+  {% endif %}
+  {% if a.sources %}
+  <p style="font-size:12px;color:#5b564d;margin:0 0 6px;">Sources: {% for s in a.sources %}<a href="{{ s.url | safe_url }}" style="color:#5b564d;">{{ s.publisher or (s.url | domain) }}</a>{% if not loop.last %} · {% endif %}{% endfor %}</p>
+  {% endif %}
+</td></tr>
+{% endmacro %}
+{% macro rule() %}
+<tr><td style="padding:10px 28px 0;"><div style="border-top:1px solid #1b1a17;font-size:0;line-height:0;">&nbsp;</div></td></tr>
+{% endmacro %}
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{{ e.paper_name }} · {{ e.date | dateline }}</title>
+</head>
+<body style="margin:0;padding:0;background:#f6f1e7;">
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#f6f1e7;">
+<tr><td align="center" style="padding:20px 10px;">
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="max-width:640px;background:#fffdf8;border:1px solid #d8d0bf;">
+<tr><td style="padding:24px 28px 6px;text-align:center;font-family:{{ serif }};color:#1b1a17;">
+  <div style="font-size:40px;line-height:1.1;font-weight:bold;">{{ e.paper_name }}</div>
+  {% if e.tagline %}
+  <div style="font-size:13px;font-style:italic;color:#5b564d;margin-top:2px;">“{{ e.tagline }}”</div>
+  {% endif %}
+  <div style="margin-top:12px;padding:5px 0;border-top:1px solid #1b1a17;border-bottom:1px solid #1b1a17;font-size:11px;letter-spacing:1px;text-transform:uppercase;">No. {{ e.number }} · {{ e.date | dateline }}{% if weather %} · {{ weather }}{% endif %}</div>
+</td></tr>
+{% if e.front.greeting %}
+<tr><td style="padding:14px 28px 0;font-family:{{ serif }};font-size:17px;font-style:italic;line-height:1.5;color:#1b1a17;text-align:center;">{{ e.front.greeting }}</td></tr>
+{% endif %}
+{% if lead %}
+{{ story(lead, 28) }}
+{% for a in top %}
+{{ rule() }}
+{{ story(a) }}
+{% endfor %}
+{% endif %}
+{% for item in sections %}
+{% if item.articles or item.section.briefs or item.section.note %}
+<tr><td style="padding:22px 28px 0;font-family:{{ serif }};"><div style="border-top:2px solid #1b1a17;border-bottom:1px solid #1b1a17;padding:5px 0;text-align:center;font-size:13px;font-weight:bold;letter-spacing:3px;text-transform:uppercase;color:#1b1a17;">{{ item.section.name }}</div></td></tr>
+{% for a in item.articles %}
+{% if not loop.first %}{{ rule() }}{% endif %}
+{{ story(a) }}
+{% endfor %}
+{% if not item.articles and item.section.note %}
+<tr><td style="padding:12px 28px 0;font-family:{{ serif }};font-size:15px;font-style:italic;color:#5b564d;text-align:center;">{{ item.section.note }}</td></tr>
+{% endif %}
+{% if item.section.briefs %}
+<tr><td style="padding:8px 28px 0;font-family:{{ serif }};">
+  {% for b in item.section.briefs %}
+  <p style="font-size:15px;line-height:1.5;margin:0;padding:6px 0;border-top:1px dotted #c9c1b1;color:#1b1a17;">{{ b.text }} <a href="{{ b.url | safe_url }}" style="font-size:12px;color:#5b564d;">{{ b.publisher or (b.url | domain) }}</a></p>
+  {% endfor %}
+</td></tr>
+{% endif %}
+{% endif %}
+{% endfor %}
+<tr><td style="padding:24px 28px 24px;font-family:{{ serif }};font-size:12px;line-height:1.5;color:#5b564d;text-align:center;">
+  {{ e.paper_name }} No. {{ e.number }}, written for {{ e.reader or "you" }}{% if e.generated_by %} by {{ e.generated_by }}{% endif %} from {{ source_count }} sources. Check the sources before you rely on a detail.{% if e.cost_usd is not none %} This edition cost about ${{ '%.2f' | format(e.cost_usd) }} to make.{% endif %}<br>
+  Made with <a href="{{ repo_url }}" style="color:#5b564d;">The Daily Me</a>, an open-source personal newspaper.
+</td></tr>
+</table>
+</td></tr>
+</table>
+</body>
+</html>

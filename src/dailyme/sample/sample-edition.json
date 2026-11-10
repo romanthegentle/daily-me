@@ -1,0 +1,185 @@
+{
+  "paper_name": "The Daily Me",
+  "tagline": "All the news that fits me",
+  "reader": "Ada",
+  "date": "2026-11-10",
+  "number": 1,
+  "front": {
+    "greeting": "Good morning, Ada. Today's paper leads with Yoco's $100 million bet that payments data can guide lending to small businesses, alongside a close reading of Nigeria's demanding new stablecoin rules. Anthropic and Meta both released models on Monday, one at the top of the market and one priced for routine agent work, and COP31 has opened with the 1.5 °C limit now expected to be breached.",
+    "lead_id": "africa-1",
+    "top_ids": ["africa-2", "ai-1", "science-2"]
+  },
+  "sections": [
+    {
+      "name": "AI & Machine Learning",
+      "note": "",
+      "articles": [
+        {
+          "id": "ai-1",
+          "section": "AI & Machine Learning",
+          "headline": "Anthropic releases Fable 5.2 and Mythos 5.2, faster and 20% cheaper",
+          "dek": "Anthropic's most capable models gain speed and lower prices, along with new caveats about how hard they are to evaluate.",
+          "body": [
+            "Anthropic released Claude Fable 5.2 and Claude Mythos 5.2 on Monday. They are one underlying model offered in two forms: Fable carries safeguards against cybersecurity and biology misuse and is open to all users, while Mythos, without those safeguards, is restricted to vetted organisations in Anthropic's cyber and life-sciences verification programmes.",
+            "Anthropic says output arrives up to 30% faster than with the 5.1 versions. Through the API they cost $8 per million tokens in and $40 per million out, which CNBC reports is 20% below the previous generation; TechCrunch notes the input price had been $10. An optional fast mode costs twice as much and generates tokens up to 2.5 times faster.",
+            "The company's research claims are ambitious. It says 1,000 Fable 5.2 agents working together turned the proof of Fermat's Last Theorem into fully machine-checked Lean code in 30 hours, against 11 days for the company's first formalisation, done by an unreleased research model, and that the model solved two open problems in black-hole physics. Like the benchmark tables in the announcement, these are Anthropic's own results.",
+            "Anthropic also reports that both models voice suspicion that they are being tested more often than its recent models, which makes their real-world behaviour harder to judge. CNBC notes it is the first frontier launch since chief executive Dario Amodei called in September for AI development to slow, and TechCrunch that it follows a METR report suggesting Anthropic's internal models were roughly doubling the pace of its AI progress, though with many uncertainties."
+          ],
+          "why_it_matters": "For a small team building on frontier models, a 20% cut at the top of the price list changes when the most capable tier is worth paying for.",
+          "importance": 8,
+          "kind": "release",
+          "published": "2026-11-09",
+          "sources": [
+            {"title": "Introducing Claude Fable 5.2 and Claude Mythos 5.2", "url": "https://www.anthropic.com/claude-fable-and-mythos-5-2", "publisher": "Anthropic"},
+            {"title": "Anthropic releases new Mythos and Fable models amid RSI concerns", "url": "https://techcrunch.com/2026/11/09/anthropic-releases-new-mythos-and-fable-models-amid-rsi-concerns/", "publisher": "TechCrunch"},
+            {"title": "Anthropic releases first frontier models since Amodei's call for slowdown as IPO buzz builds", "url": "https://www.cnbc.com/2026/11/09/anthropic-claude-fable-5-2-mythos-5-2.html", "publisher": "CNBC"}
+          ]
+        },
+        {
+          "id": "ai-2",
+          "section": "AI & Machine Learning",
+          "headline": "Meta releases Muse Ember, a low-cost model for routine agent tasks",
+          "dek": "At 10 cents for a million input tokens, Meta's smallest Muse model is meant to carry the bulk of an agent's work beneath a larger planner.",
+          "body": [
+            "Meta Superintelligence Labs released Muse Ember on Monday, the smallest and most cost-efficient model in its Muse family. Meta says it is built for the steps agents repeat all day, such as tool calls, routing, extraction, coding subtasks and long-document parsing, and that it understands text, images, audio and video.",
+            "Ember is priced at $0.10 per million tokens in and $0.50 per million out, with a 1-million-token context window and up to 512,000 output tokens. It is available as muse-ember-1.0 through Meta's Model API and Muse Code, and on Google Cloud and Oracle Cloud. For the hardest problems, Meta suggests letting its larger Muse Wonder model plan while Ember does the volume work.",
+            "Meta's case rests on cost per task: it says Ember matches Claude Haiku 5.5's best score on the Artificial Analysis Intelligence Index at about a third of the cost. Several other benchmarks in the announcement are Meta's internal tests, and Ember trails Haiku 5.5 on the FrontierCode 2.0 coding benchmark. TechCrunch notes it is the fourth Muse model, after Spark in April, its open-source twin Glimmer in August and the frontier model Wonder in October."
+          ],
+          "why_it_matters": "If your product makes many small model calls, such as pulling fields from documents or routing customer requests, prices this low could change what an agent pipeline costs to run, provided the quality holds up on your own data.",
+          "importance": 7,
+          "kind": "release",
+          "published": "2026-11-09",
+          "sources": [
+            {"title": "Introducing Our Smallest, Most Efficient Model: Muse Ember", "url": "https://research.meta.ai/blog/muse-ember", "publisher": "Meta"},
+            {"title": "Meta releases Muse Ember, a new lightweight model for agent execution", "url": "https://techcrunch.com/2026/11/09/meta-releases-muse-ember-a-new-lightweight-model-for-agent-execution/", "publisher": "TechCrunch"}
+          ]
+        }
+      ],
+      "briefs": [
+        {"text": "In an update on its October security breach, Fireworks AI says attackers reached customer billing records and, for some accounts, datasets and incomplete model weights, and that it has detected no impact on its inference service.", "url": "https://fireworks.ai/security/bulletins/october-2026-security-incident-update", "publisher": "Fireworks AI"},
+        {"text": "A paper on Shopify's production systems describes SID-LLM, a single model that handles both product search and recommendations by generating short product IDs; the authors report gains in online A/B tests.", "url": "https://arxiv.org/abs/2611.08804", "publisher": "arXiv"}
+      ]
+    },
+    {
+      "name": "African Tech",
+      "note": "",
+      "articles": [
+        {
+          "id": "africa-1",
+          "section": "African Tech",
+          "headline": "Yoco secures $100 million facility to expand merchant cash advances",
+          "dek": "The South African payments company will take direct control of more of the financing it offers small merchants, using sales data from its own payment tools to decide who qualifies.",
+          "body": [
+            "Victory Park Capital, a US investment firm, is providing Yoco with a $100 million credit line to expand Yoco Capital, the South African company's cash-advance arm for small businesses. TechCabal reports that since 2018 Yoco Capital has advanced more than R6.5 billion (about $395 million) to upwards of 40,000 merchants through specialist credit partners; the new line is meant to give Yoco more say over how those advances are priced and how much risk it takes on.",
+            "The model runs on payments data. Merchants already processing in-person and online payments with Yoco are assessed on their live sales, and eligible ones see an offer in the app rather than filling in an application. Advances range from R2,000 to R1.5 million with no collateral, and repayments are taken from daily takings, so they rise and fall with trade.",
+            "Yoco says none of its lending cohorts has been unprofitable since 2018, including through the pandemic, but TechCabal notes the company released no default rates, write-offs or cohort figures. It plans to extend the service to more of its 200,000-plus merchants, in a country where a 2025 Finfind and African Bank report puts the shortfall in small-business finance at about R350 billion."
+          ],
+          "why_it_matters": "It is a live test of underwriting small businesses from transaction data rather than bank statements, the kind of model a data-driven fintech in Lagos can learn from.",
+          "importance": 8,
+          "kind": "news",
+          "published": "2026-11-09",
+          "sources": [
+            {"title": "Yoco taps $100 million credit facility to scale merchant cash advances", "url": "https://techcabal.com/2026/11/09/yoco-payments-data-merchant-lending/", "publisher": "TechCabal"}
+          ]
+        },
+        {
+          "id": "africa-2",
+          "section": "African Tech",
+          "headline": "Nigeria sets ₦15 billion capital bar for foreign-currency stablecoin issuers",
+          "dek": "The central bank now requires local licensing and large capital buffers, and TechCabal warns that similar rules elsewhere could fragment Africa's stablecoin market.",
+          "body": [
+            "Regulations the Central Bank of Nigeria issued on 5 November require any issuer of a foreign-currency stablecoin, such as a dollar token, to serve Nigerian users through a locally incorporated, CBN-licensed company with at least ₦15 billion in paid-up capital. Issuers of naira-referenced stablecoins need ₦10 billion, and other virtual-asset businesses, such as exchanges and wallet providers, need ₦1 billion. The text states that offshore issuers get no exemption.",
+            "Foreign-currency issuers must also hold separate operational liquidity of at least $10 million, more for those with larger Nigerian obligations, on top of their capital and the reserves backing their tokens. Peer-to-peer platforms may not release tokens unless the name and Bank Verification Number on the naira account used in the trade match the verified customer.",
+            "In Monday's TechCabal Daily, the publication set the rules beside Kenya's, introduced in July, which require stablecoin issuers to hold KES 300 million in paid-up capital, register locally and keep at least 30% of issuance funds in Kenyan bank trust accounts. Its view is that local supervision can protect users when an issuer fails, but that if more countries set their own terms, large issuers such as Tether and Circle will absorb the costs best, smaller ones may stay away, and the continent may be left with a \"patchwork of national stablecoin markets\"."
+          ],
+          "why_it_matters": "For a Lagos fintech that touches dollar stablecoins, these rules decide which issuers can legally serve its users, and TechCabal suggests that list could get shorter.",
+          "importance": 8,
+          "kind": "analysis",
+          "published": "2026-11-09",
+          "sources": [
+            {"title": "TechCabal Daily – Nigeria tightens stablecoin rules", "url": "https://techcabal.com/2026/11/09/%f0%9f%91%a8%f0%9f%8f%bf%f0%9f%9a%80techcabal-daily-nigeria-tightens-stablecoin-rules/", "publisher": "TechCabal"},
+            {"title": "Regulations for the Operations of Non-Security Virtual Assets in Nigeria", "url": "https://www.cbn.gov.ng/Out/2026/CCD/REGULATIONS%20FOR%20THE%20OPERATIONS%20OF%20NON-SECURITY%20VIRTUAL%20ASSETS%20IN%20NIGERIA.pdf", "publisher": "Central Bank of Nigeria"},
+            {"title": "CBN sets N15 billion capital requirement for foreign stablecoin issuers, tightens P2P crypto rules", "url": "https://nairametrics.com/2026/11/06/breaking-cbn-sets-n15-billion-capital-requirement-for-foreign-stablecoin-issuers-tightens-p2p-crypto-rules/", "publisher": "Nairametrics"}
+          ]
+        }
+      ],
+      "briefs": [
+        {"text": "Nigeria's biggest mobile operators have taken the House of Representatives to court, asking the Federal High Court in Abuja to stop lawmakers compelling their chief executives to answer for network quality, which they argue is the regulator's job.", "url": "https://techcabal.com/2026/11/09/nigerian-telecom-operators-sue-reps/", "publisher": "TechCabal"},
+        {"text": "IFC research presented in Luanda found that African corporate bonds carried a median real yield of 2.8% in 2015–2024, against 1% in high-income countries; it points to pension reform as one way to narrow the gap.", "url": "https://techcabal.com/2026/11/09/ifc-africa-corporate-borrowing-costs/", "publisher": "TechCabal"}
+      ]
+    },
+    {
+      "name": "Science & Space",
+      "note": "",
+      "articles": [
+        {
+          "id": "science-1",
+          "section": "Science & Space",
+          "headline": "NASA's twin ESCAPADE probes slingshot past Earth toward Mars",
+          "dek": "Engine burns during close passes on 7 and 9 November put the twin spacecraft on course to reach Mars in September 2027.",
+          "body": [
+            "NASA's two ESCAPADE spacecraft are on their way to Mars after powered flybys of Earth. The first fired its engine for about nine minutes on 7 November, roughly 1,000 miles above the surface, and the second completed its burn on 9 November at about 650 miles. NASA says none of its earlier missions had used an engine burn during an Earth flyby to head for Mars.",
+            "The pair lifted off from Cape Canaveral on 13 November 2025, with Mars then on the far side of the Sun from Earth. Instead of heading straight out, they looped around a gravitational balance point about a million miles from Earth and came back for the slingshot. Jeff Parker of Advanced Space, the lead mission designer, says the approach lets a mission launch almost any time rather than waiting for the planets to align every two years.",
+            "After a cruise of about 10 months, the spacecraft are due to enter Mars orbit on 7 and 9 September 2027 and fly in formation to study how the solar wind interacts with the planet and drives the loss of its atmosphere, with science operations expected from June 2028. The mission belongs to NASA's SIMPLEx programme for smaller-budget missions and is led by the University of California, Berkeley's Space Sciences Laboratory."
+          ],
+          "why_it_matters": "It is a working test of a route to Mars that does not depend on the planets' two-year alignment, flown by a small mission on a limited budget.",
+          "importance": 6,
+          "kind": "news",
+          "published": "2026-11-09",
+          "sources": [
+            {"title": "NASA's ESCAPADE Completes Powered Earth Flybys, Now En Route to Mars", "url": "https://science.nasa.gov/science-research/heliophysics/nasas-escapade-completes-powered-earth-flybys-now-en-route-to-mars/", "publisher": "NASA"}
+          ]
+        },
+        {
+          "id": "science-2",
+          "section": "Science & Space",
+          "headline": "COP31 opens with the 1.5 °C limit now expected to be breached",
+          "dek": "Nature reports that scientists want the talks in Antalya to plan for removing carbon dioxide at scale, now that the UN accepts warming will overshoot the Paris goal.",
+          "body": [
+            "The UN's annual climate conference opened on Monday in Antalya, Turkey, for 12 days of talks. Nature reports that it is the first since the UN Environment Programme's Limiting Overshoot report acknowledged last month that warming will pass 1.5 °C above pre-industrial levels under every plausible emissions pathway.",
+            "That report says bringing temperatures back below 1.5 °C this century would take near-zero emissions plus the removal of hundreds of billions of tonnes of carbon dioxide, through technology or methods such as reforestation. Researchers quoted by Nature expect limits on the size and length of the overshoot to shape the talks, though past COP decisions have said little about carbon removal, and Oxford's Steve Smith says no country has yet put clearly quantified removal targets in its climate pledges.",
+            "Some scientists want the process itself reformed. Johan Rockström of the Potsdam Institute for Climate Impact Research told Nature that decisions should be possible by majority vote rather than consensus, which lets a handful of states block what most want. Under current policies, the UN's Emissions Gap report projects 2.6 to 2.8 °C of warming this century, down from around 4 °C expected when the Paris agreement was signed in 2015."
+          ],
+          "why_it_matters": "This is the first summit to work from the assumption that 1.5 °C will be breached, so watch how it handles carbon removal, which researchers say would be needed on a very large scale.",
+          "importance": 7,
+          "kind": "news",
+          "published": "2026-11-09",
+          "sources": [
+            {"title": "COP31 kicks off as planet faces imminent overshoot of 1.5 °C climate target", "url": "https://www.nature.com/articles/d41586-026-03631-w", "publisher": "Nature"}
+          ]
+        }
+      ],
+      "briefs": [
+        {"text": "NASA's Chandra X-ray Observatory has traced a giant star's outbursts, which recur roughly every 113 days, to a hidden black hole or neutron star pulling material from it; it is the first star of its kind found with such a companion.", "url": "https://science.nasa.gov/missions/chandra/nasas-chandra-finds-source-of-stars-mysterious-outbursts/", "publisher": "NASA"}
+      ]
+    },
+    {
+      "name": "Outside your bubble",
+      "note": "",
+      "articles": [
+        {
+          "id": "bubble-1",
+          "section": "Outside your bubble",
+          "headline": "Scientists are training lab-grown brain tissue to work as computers",
+          "dek": "Clumps of neurons grown from stem cells have been taught to play Pac-Man and steer robots, and a few companies already rent or sell them.",
+          "body": [
+            "A young field called organoid intelligence is trying to compute with living neurons. Organoids are tiny clumps of brain tissue grown from stem cells, and once they are complex enough their cells start exchanging electrical signals. Science reports that researchers met last month in Washington for the field's first international conference, drawn by the idea that neurons compute with orders of magnitude greater efficiency than chips, though nobody fully knows why.",
+            "Training usually means feeding the cells electrical or chemical signals that describe a task, reading their firing patterns and rewarding or punishing the outcome. The company 28bio taught linked groups of cells to play Pac-Man, using rest as a reward and a jolt of stimulation as a penalty. FinalSpark rents remote access to organoids on chips to about 20 research teams, and Cortical Labs sells a device called the CL1; Science reports that two or more firms in Singapore and Australia are building data centres out of CL1 units.",
+            "The basic questions remain open. Researchers still do not know exactly how real neurons compute, and in some set-ups it is hard to tell whether the organoid or the software reading it is doing the work. Some labs are putting trained organoids to a different use, testing how mutations, toxins or drugs affect learning and memory as a possible alternative to animal studies."
+          ],
+          "why_it_matters": "It is an early and uncertain attempt at a far more energy-efficient kind of computer, trained with the same reward-and-feedback ideas a data scientist already uses.",
+          "importance": 5,
+          "kind": "feature",
+          "published": "2026-11-09",
+          "sources": [
+            {"title": "Neurons in a dish are the newest computing machines", "url": "https://www.science.org/content/article/neurons-dish-are-newest-computing-machines", "publisher": "Science"}
+          ]
+        }
+      ],
+      "briefs": []
+    }
+  ],
+  "weather": {"place": "Lagos", "summary": "Moderate rain showers", "high_c": 28.7, "low_c": 25.2},
+  "generated_by": "Claude Code (daily-me skill)",
+  "cost_usd": null
+}
